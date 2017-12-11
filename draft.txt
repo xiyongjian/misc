@@ -1,3 +1,19 @@
+>>> import json
+>>> import requests
+>>>
+>>> url='http://graph.facebook.com/v2.3/123123
+>>> head = {'Content-type':'application/json',
+             'Accept':'application/json'}
+>>> payload = {'name':'Saravanan',
+               'Designation':'Architect',
+               'Orgnization':'Cisco Systems'}
+
+>>> payld = json.dumps(payload)
+>>> ret = requests.post(url,header=head,data=payld)
+>>> ret.status_code
+200
+
+
 @author: xyj
 '''
 import json
