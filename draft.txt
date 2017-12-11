@@ -1,3 +1,14 @@
+print(json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}]))
+
+cdr = {
+   'DOMAIN' : 'dev' 
+    }
+
+cdr['FROM_USER_ID'] = 1234
+cdr['DURATION'] = 300
+cdr['TO_USERS'] = [{"TO_USER_ID" : 1001}, {"TO_USER_ID" : 1002}]
+
+
 DROP TABLE NG.CALL_RECORDS ;
 CREATE TABLE NG.CALL_RECORDS (
   CALL_RECORD_ID        INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
