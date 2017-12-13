@@ -1,6 +1,8 @@
 get mesos/slave/master from 
 https://github.com/mesosphere/docker-containers/tree/master/mesos
 
+git : https://github.com/mesosphere/docker-containers.git 
+
 setup :
 https://github.com/mesosphere/docker-containers/tree/master/mesos
 
