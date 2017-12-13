@@ -1,1 +1,19 @@
 get sample sbt project from 
+
+start sbt project : 
+https://developer.lightbend.com/guides/akka-quickstart-scala/
+
+create SBT project
+https://developer.lightbend.com/start/?group=akka&project=akka-quickstart-scala
+unzip and get the folder, 
+
+changet file  project\plugins.sbt
+add plugin for eclipse 
+	addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "5.2.4")
+	
+run (using ivy2 dependency management)
+	sbt help
+	sbt plugins
+	sbt eclipse
+  
+change content for right project (e.g add dependencies)
