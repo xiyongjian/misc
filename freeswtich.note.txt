@@ -21,97 +21,45 @@
 
 
 
-
-# https://wiki.freeswitch.org/wiki/Examples_frontdoor_py
-
-from freeswitch import *
-import datetime, time, md5, os, sys
-from pytz import timezone
-
-class FrontdoorMain:
-
-    def __init__(self, session):
-        self.session = session            
-
-    def bridge2endpoint(self):
-        self.session.execute("set","call_timeout=30")
-        self.session.execute("set","continue_on_fail=true")
-        self.session.execute("set","hangup_after_bridge=true")
-        self.session.execute("set", "ringback=%(2000,4000,440.0,480.0)")
-        mycellphone = "12023334444"
-        mynetphone = "foo@bar.com"
-        self.session.execute("bridge",
-                             "sofia/gateway/acme/%s, sofia/default/%s" %
-                             (mycellphone, mynetphone))
-        self.session.execute("set","hangup_after_bridge=true")
-
-    def internal_access(self):
-
-        caller_id = self.session.getVariable("caller_id_number")
-        console_log("info", "caller id:: %s" % caller_id)
-
-        if caller_id in ['12021112222','4511112222']:
-            logged_in = True
-        else:
-            # could prompt them and compare input against a db
-            # and set logged_in variable with the result
-            pass
-        
-        if not logged_in:
-            self.speak("Goodbye")
-            return
-
-        # 1. enter a local extension
-        # 2. dial out of gateway
-        # 3. listen to voicemail
-        thing2say = "Enter_extension_followed_by_the_pound_sign.wav"
-        in_rslt = self.session.playAndGetDigits(1,15,3,15000,        
-                                                "*#",thing2say,
-                                                "","")[1]
-        if in_rslt:
-            self.session.execute("execute_extension", in_rslt)
-        
-        
-    def main(self):
-        thing2say = "Hello_Connecting_your_call_please_hold.wav"
-        in_rslt = self.session.playAndGetDigits(1,1,1,1000,
-                                                "*#",thing2say,
-                                                "","")[1]
-        if in_rslt:
-            if int(in_rslt) == 0:
-                return self.internal_access()
-                
-        tz_name="America/Los_Angeles"
-        tz = timezone(tz_name)
-        now = datetime.datetime.now(tz)
-        if now.hour >= 7 and now.hour <=22:
-            self.bridge2endpoint()
-        else:
-            self.session.answer()
-            # play a warning saying only continue if emergency,
-            # press 1 to continue
-            thing2say = "You_have_called_after_hours.wav"
-            in_rslt = self.session.playAndGetDigits(1,1,1,5000,
-                                                "*#",thing2say,
-                                                "","")[1]
-            bridgecall = False
-            if in_rslt:
-                # if they press 1, let them through ..
-                if int(in_rslt) == 1:
-                    bridgecall = True
-
-            if bridgecall:
-                self.bridge2endpoint()
-            else:
-                # transfer to voicemail..
-		pass
-                    
-
-
-def handler(uuid):
-    if not uuid:
-        console_log("info", "\nNo uuid given\n")
-        return
-    session = PySession(uuid)
-    frontdoormain = FrontdoorMain(session)
-    frontdoormain.main()
+ewogICJ0eXBlIjogInNlcnZpY2VfYWNjb3VudCIsCiAgInByb2plY3RfaWQiOiAibWV0aG9kaWNh
+bC10ZWEtMTUwNjAzIiwKICAicHJpdmF0ZV9rZXlfaWQiOiAiOGIxNWFhYzliNWFkNTQ2M2E3NDFh
+NzBhMDQ5ZDRlZDdjYzIxMWRjOCIsCiAgInByaXZhdGVfa2V5IjogIi0tLS0tQkVHSU4gUFJJVkFU
+RSBLRVktLS0tLVxuTUlJRXZnSUJBREFOQmdrcWhraUc5dzBCQVFFRkFBU0NCS2d3Z2dTa0FnRUFB
+b0lCQVFESzBNaCtaVHI5TjlhQ1xucms3RnJ6R2dGd1ZKUFp1ekdpL3dRczhJeWxQd0RTaVVqSTFn
+a2lZczFqVTlIVDJXUW9DWEZzelZGS0p2em5OWVxuTWtjVnNKYWFJVklaYVczM0daR2pEUHd0ZkM1
+SmhWZzRiTUU5YTdzeld3dE9PK3RDUU5RbjVIMk1RYmNuTFZtNVxuNXhtNXB1cTVaT1BTOUU3bHNI
+VC83TXVxcXcxNy9FaCtQbEhWaFFUT0tFUUp3NzVlMENZU0FoTDd4T0xub3c5WlxubzY5R010ZDRw
+TnJBL3VmV0h4Y2VrWHBoQlhLSitBRUVYQjBlTmxIK3FzeDV5elZOTjl4RTF1S3RJdnVGcWJUT1xu
+NUpzazcyNDBWKzZsV0lJL3N4d25Fd0NqRENBVkp4K1B0NUNZL2dwZkNoVXVmdHZURlVTMk1LL1ZP
+eGs4eFZ5d1xua0wwSFQzeTdBZ01CQUFFQ2dnRUFERkVabS9OeDNhYmlkQlU1MjIrRVNBQ2Q1WkRF
+UCtBN1FSQU5tcThPNGVrcVxucWJyUGF5bjAvNHdTdDU5cStoRVgxaFVnWTJCWmJRalFvRzZOT3Bm
+NnpXbHdudkowSnlsNldyaVRKLy8rbjZCbFxuZHlmRHBJTkNYeUFNVTdmMzFaSXlVQ25rSmZ4bnJ3
+MW1BWkF6VTc3N1NqOENSdkZuU1RPcUoxQ3VIYk05b21YWVxuSTR3QUhwZkZUZGo5bUxoWlZybmp6
+cTlZYXdHMmVla2VEMHN4TkNILzdSUjBuYzVteXR2cms0cHhuY01nallKZlxub0hXQ3FxYVI2OG1y
+bkp3L05NSmVEQVZCajI3RDdlNytLckpVN1p5RlVjNFpoQmZNUHE3b3dZOW8yaXN6cUtLNFxuNWVR
+WFhmR0R5VmhkWDlJNkI3aFB5UERsRy9ZYXFNM0JEd2lqMkNHVUlRS0JnUURtMEpQMnliUHQwRlRq
+WFpjVlxuSE5maHYySmJOdnREenM5dFg0cktqMDY1Y3lNMXFvTjB4bzRkWFhQcjhBUjlmZVpGM0hy
+QWFWTVAxY1Fkb1NvMlxuYVZiVmk0N3I2cFJUQWJSUEZNYVhoYkw2WitxRWVTaEFLOHJvdkxEZXRm
+d1hGS0VwUzIxdjRjOTJ1UFZlYVNqZFxuc0FWZkRPK1loSmRkMEttbVRxOUFrVGJZTlFLQmdRRGc4
+aGc5Q0x5RGRsaHVNdDRPYmtYTjd4dkpvS0Zqc0NNaVxuMmRzYzJLV1h4dllXSmZ1S0lyQTFPT0dJ
+eEpMeWJ1K3lPZEUxbHJTbkh5YUhWYTNmTGVCVXlRVTVuRE5jMUF0Q1xub0owalJadDF0UTA3dUZN
+Nk14ZlZ1NnpaQXkrUVdGeXlqNXhnNkFKNE1VTmRld0Y3MHljVnNYR1dHaVU4Wko3UFxuQi9xRDMz
+My9Md0tCZ1FDd3l0WnEwemhFVWF5VHNwNEVoK0U3Z3JJOWw3R0IwS2pFNThlUk80OWJNTHVwWVgv
+clxuTkNLcWoyZzVNZERlcGs1NCtGWDFoemNlQytoNW9YYUowc20ySzMwL2FxQk5yQ0tGNkMzczVY
+V2ZvM1RZSDAwYlxuU2UvVHNLUHhFb2VTempSYlF2RUNIMzRmTzdDRnJocWxJeXdhRC9oOVpDSGtz
+KzBkKzJyMUU4VmtlUUtCZ1FEWFxuQ0hjRk9XbkVIZ2l3NTIyQXpBZHNza3VVOWpueGF2cGJvWGls
+WGJFR28wcXhwNE9LN0ZnWHVKVll3ZGxiYVpNM1xuZzYrcms3S0VJL0lYNDE2Ly8wSDRxdVdVeWU0
+THFpUk5mKzVYUG40N0NtVnBGbTV4TDFCMG4rQyszeDNEMWNSZlxuYVl0cTA3OHdtSjgyS0pVbGdw
+ZFZWSGdwcmpxMFBkZldQMkZLV1FaQVB3S0JnR1BlYzFCWkJodFgrcC8ycG5JMlxueWc3TGhQZ3RB
+TG1USkhFMHpreHpCR3FHTHhNd1dlRFUxc0xKT2RWaytYWXVJRWZlUERpVm5oZncrWkkwZ1BLZVxu
+RHNhMHdiK3VQRlZSN3E5MldZSG9qYkQ1Rlo2bkVUcVBPZlhJdVd4OERZNk9WdmFBeXh1cUNHVEdw
+Q0RiTGw1aVxuMDhudU42cmE0M254KzRmbEtaazZMRlNqXG4tLS0tLUVORCBQUklWQVRFIEtFWS0t
+LS0tXG4iLAogICJjbGllbnRfZW1haWwiOiAidHJhbnNjcmliZXJAbWV0aG9kaWNhbC10ZWEtMTUw
+NjAzLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwKICAiY2xpZW50X2lkIjogIjEwODk1MDIyMTM0
+ODg0NDk1ODY2NiIsCiAgImF1dGhfdXJpIjogImh0dHBzOi8vYWNjb3VudHMuZ29vZ2xlLmNvbS9v
+L29hdXRoMi9hdXRoIiwKICAidG9rZW5fdXJpIjogImh0dHBzOi8vYWNjb3VudHMuZ29vZ2xlLmNv
+bS9vL29hdXRoMi90b2tlbiIsCiAgImF1dGhfcHJvdmlkZXJfeDUwOV9jZXJ0X3VybCI6ICJodHRw
+czovL3d3dy5nb29nbGVhcGlzLmNvbS9vYXV0aDIvdjEvY2VydHMiLAogICJjbGllbnRfeDUwOV9j
+ZXJ0X3VybCI6ICJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9yb2JvdC92MS9tZXRhZGF0YS94
+NTA5L3RyYW5zY3JpYmVyJTQwbWV0aG9kaWNhbC10ZWEtMTUwNjAzLmlhbS5nc2VydmljZWFjY291
+bnQuY29tIgp9IAo=
