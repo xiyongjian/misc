@@ -62,4 +62,10 @@ http://192.168.0.126:8080/exhibitor/v1/ui/index.html
 check mesos
 http://192.168.0.126:5050/#/
 
+verify mesos
+  MASTER=$(mesos-resolve `cat /etc/mesos/zk`)
+  mesos-execute --master=$MASTER --name="cluster-test" --command="echo DO SOMETHING; sleep 5"
+Browse
+  Mesos: http://localhost:5050
+  Marathon: http://localhost:8080
 
