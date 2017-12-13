@@ -1,0 +1,56 @@
+get mesos/slave/master from 
+https://github.com/mesosphere/docker-containers/tree/master/mesos
+
+setup :
+https://github.com/mesosphere/docker-containers/tree/master/mesos
+
+pull docker image
+  105  docker pull mesosphere/mesos:1.4.1
+  106  docker pull mesosphere/mesos-master:1.4.1
+  107  docker pull mesosphere/mesos-slave:1.4.1
+  110  docker pull mesosphere/spark
+  196  docker pull netflixoss/exhibitor:1.5.2
+
+setup run scripts
+## important for fixing error
+    EXIT with status 1: Failed to initialize systemd: Failed to locate systemd runtime directory: /run/systemd/system
+add this in slave's command line
+  -e MESOS_LAUNCHER=posix \
+  -e MESOS_SYSTEMD_ENABLE_SUPPORT=false \
+
+---------- BEGIN ------------
+echo run : docker run -d --net=host netflixoss/exhibitor:1.5.2
+docker run -d --net=host netflixoss/exhibitor:1.5.2
+
+echo run : docker run -d --net=host ... master
+docker run -d --net=host \
+  -e MESOS_PORT=5050 \
+  -e MESOS_ZK=zk://127.0.0.1:2181/mesos \
+  -e MESOS_QUORUM=1 \
+  -e MESOS_REGISTRY=in_memory \
+  -e MESOS_LOG_DIR=/var/log/mesos \
+  -e MESOS_WORK_DIR=/var/tmp/mesos \
+  -v "$(pwd)/log/mesos:/var/log/mesos" \
+  -v "$(pwd)/tmp/mesos:/var/tmp/mesos" \
+  mesosphere/mesos-master:1.4.1
+
+echo run : docker run -d --net=host ... slave
+docker run -d --net=host --privileged \
+  -e MESOS_PORT=5051 \
+  -e MESOS_MASTER=zk://127.0.0.1:2181/mesos \
+  -e MESOS_SWITCH_USER=0 \
+  -e MESOS_CONTAINERIZERS=docker,mesos \
+  -e MESOS_LOG_DIR=/var/log/mesos \
+  -e MESOS_WORK_DIR=/var/tmp/mesos \
+  -e MESOS_LAUNCHER=posix \
+  -e MESOS_SYSTEMD_ENABLE_SUPPORT=false \
+  -v "$(pwd)/log/mesos:/var/log/mesos" \
+  -v "$(pwd)/tmp/mesos:/var/tmp/mesos" \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /cgroup:/cgroup \
+  -v /sys:/sys \
+  -v /usr/local/bin/docker:/usr/local/bin/docker \
+  mesosphere/mesos-slave:1.4.1
+---------- END ------------
+
+
