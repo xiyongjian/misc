@@ -1,3 +1,5 @@
+tip : find required library from pre-built docker image for target software/system
+
 get mesos/slave/master from 
 https://github.com/mesosphere/docker-containers/tree/master/mesos
 
