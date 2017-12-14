@@ -69,3 +69,13 @@ Browse
   Mesos: http://localhost:5050
   Marathon: http://localhost:8080
 
+at mesos master, setup spark (install?), then setup env
+(download : https://spark.apache.org/downloads.html)
+export MESOS_NATIVE_LIBRARY=/usr/local/lib/libmesos.so
+export SPARK_EXECUTOR_URI=http://192.168.0.7/download/ spark-1.2.1-bin-haoop2.4.tgz
+export MASTER=mesos://xd-ui:5050
+
+in spark-shel, run scala
+scala> val data = 1 to 10000; val distData = sc.parallelize(data); distData.filter(_< 10).collect()
+data: scala.collection.immutable.Range.Inclusive = Range(1, 2, 3, 4, 5, 6, 7 ....
+
