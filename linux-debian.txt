@@ -8,6 +8,12 @@ setup key
 import keys
  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 
+dpkg error: “trying to overwrite file, which is also in…”
+ref - https://askubuntu.com/questions/176121/dpkg-error-trying-to-overwrite-file-which-is-also-in
+ dpkg -i --force-overwrite  /var/cache/apt/archives/openjdk-9-jdk_9~b114-0ubuntu1_amd64.deb
+then
+ apt-get install .......
+
 /etc/apt/source.list.d/
 add my list and run 
 apt-get update
