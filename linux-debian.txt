@@ -5,7 +5,8 @@ setup key
  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 40976EAF437D05B5
  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32
  apt-key list
-
+import keys
+ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 
 /etc/apt/source.list.d/
 add my list and run 
