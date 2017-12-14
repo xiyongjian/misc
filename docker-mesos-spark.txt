@@ -87,3 +87,22 @@ building java spark app, maven dependency (need mesos build in spark)
 			<artifactId>spark-mesos_2.11</artifactId>
 			<version>2.2.1</version>
 		</dependency>
+
+
+
+run wordcount app, ref : https://github.com/melphi/spark-examples/tree/master/first-example
+--- START ---
+SPARK_EXECUTOR_URI=/var/tmp/mesos/lib/spark-2.2.1-bin-hadoop2.7.tgz
+#MESOS_NATIVE_LIBRARY=/usr/local/lib/libmesos.so
+MESOS_NATIVE_JAVA_LIBRARY=/usr/local/lib/libmesos.so
+
+SPARK_WORKER_INSTANCES=1
+SPARK_WORKER_MEMORY=1G
+SPARK_EXECUTOR_MEMORY=2G
+# SPARK_WORKER_CORES=2
+# SPARK_MASTER_IP=127.0.1.1
+# SPARK_LOCAL_IP=127.0.1.1
+SPARK_MASTER_OPTS="-Dspark.deploy.defaultCores=4"
+echo java -Dspark.deploy.defaultCores=4 -jar /tmp/word-count.jar /root/docker/text.txt mesos://127.0.1.1:5050
+java -Dspark.mesos.executor.home=/opt/spark-2.2.1-bin-hadoop2.7 -Dspark.deploy.defaultCores=4 -jar /tmp/word-count.jar /root/docker/text.txt mesos://192.168.0.10:5050
+--- END ---
