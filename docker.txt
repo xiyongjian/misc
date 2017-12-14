@@ -1,0 +1,27 @@
+
+run docker in privileged mode, access device, start service, e.g like daemon
+ https://hub.docker.com/r/centos/systemd/
+--- BEGIN ---
+FROM centos/systemd
+
+MAINTAINER "Your Name" <you@example.com>
+
+RUN yum -y install httpd; yum clean all; systemctl enable httpd.service
+
+EXPOSE 80
+
+CMD ["/usr/sbin/init"]
+Then build it.
+
+docker build --rm --no-cache -t httpd .
+Launch it.
+
+docker run --privileged --name httpd -v /sys/fs/cgroup:/sys/fs/cgroup:ro -p 80:80 -d  httpd
+--- END --- 
+
+Runtime privilege and Linux capabilities
+--cap-add: Add Linux capabilities
+--cap-drop: Drop Linux capabilities
+--privileged=false: Give extended privileges to this container
+--device=[]: Allows you to run devices inside the container without the --privileged flag.
+
