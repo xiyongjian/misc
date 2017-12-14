@@ -1,3 +1,6 @@
+step by step setting in centos 7
+https://www.javacodegeeks.com/2016/06/using-mapr-mesos-marathon-docker-apache-spark-deploy-run-first-jobs-containers.html
+
 tip : find required library from pre-built docker image for target software/system
 
 get mesos/slave/master from 
