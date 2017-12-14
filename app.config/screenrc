@@ -1,4 +1,6 @@
 
+# for screen title, unset env variable : 
+#    unset PROMPT_COMMAND
 # termcapinfo xterm ti@:te@
 #       Hardstatus (update xterm title)
 # hardstatus string "SCREEN @ %H: %-n - %t"
