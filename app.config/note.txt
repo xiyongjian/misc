@@ -1,0 +1,2 @@
+sudo no password
+xyj     AL=(ALL)        NOPASSWD: ALL
