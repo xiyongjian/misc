@@ -1,0 +1,8 @@
+/etc/apt/source.list.d/
+add my list and run 
+apt-get update
+
+
+check package from which repo
+apt policy <pkgname>
+
