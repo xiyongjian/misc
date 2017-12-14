@@ -1,5 +1,11 @@
+
 disable key verify for repo!
-apt-get --allow-unauthenticated upgrade
+ apt-get --allow-unauthenticated upgrade
+setup key
+ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 40976EAF437D05B5
+ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32
+ apt-key list
+
 
 /etc/apt/source.list.d/
 add my list and run 
