@@ -1,3 +1,6 @@
+disable key verify for repo!
+apt-get --allow-unauthenticated upgrade
+
 /etc/apt/source.list.d/
 add my list and run 
 apt-get update
