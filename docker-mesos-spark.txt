@@ -79,3 +79,9 @@ in spark-shel, run scala
 scala> val data = 1 to 10000; val distData = sc.parallelize(data); distData.filter(_< 10).collect()
 data: scala.collection.immutable.Range.Inclusive = Range(1, 2, 3, 4, 5, 6, 7 ....
 
+building java spark app, maven dependency (need mesos build in spark)
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-mesos_2.11</artifactId>
+			<version>2.2.1</version>
+		</dependency>
