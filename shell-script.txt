@@ -1,0 +1,22 @@
+
+
+
+tk argument process
+$@ : $1.... (not include $0)
+${1:0:1} : substring of $1
+set -- mysqld "$@" : set $@ as new one with mysqld at first
+
+echo start : $@
+ echo check : ${1:0:1}
+ echo check : ${1:1:3}
+ echo check : ${1:2:3}
+
+ if [ "${1:0:1}" = '-' ]; then
+         echo set :
+         set -- mysqld "$@"
+ fi
+
+ echo final : $@
+
+ set -- mysqld "$@"
+ echo after : $@
