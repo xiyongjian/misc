@@ -1,3 +1,51 @@
+
+
+setup docker container cluster for mesos/...
+  https://medium.com/@gargar454/deploy-a-mesos-cluster-with-7-commands-using-docker-57951e020586
+  http://czcodezone.blogspot.ca/2016/03/setup-mesos-cluster-in-centos-vms.html
+  https://github.com/sekka1/mesosphere-docker
+sample setup :
+export HOST_IP=192.168.0.10
+
+# start zookeeper
+#docker run -d -p 2181:2181 -p 2888:2888 -p 3888:3888 --name zookeeper zookeeper
+docker run --rm -d \
+-p 2181:2181 \
+-p 2888:2888 \
+-p 3888:3888 \
+garland/zookeeper
+
+# start mesos master
+docker run --rm --net="host" \
+-p 5050:5050 \
+-e "MESOS_HOSTNAME=${HOST_IP}" \
+-e "MESOS_IP=${HOST_IP}" \
+-e "MESOS_ZK=zk://${HOST_IP}:2181/mesos" \
+-e "MESOS_PORT=5050" \
+-e "MESOS_LOG_DIR=/var/log/mesos" \
+-e "MESOS_QUORUM=1" \
+-e "MESOS_REGISTRY=in_memory" \
+-e "MESOS_WORK_DIR=/var/lib/mesos" \
+-d \
+garland/mesosphere-docker-mesos-master
+
+# start marathon master
+docker run --rm \
+-d \
+-p 8080:8080 \
+garland/mesosphere-docker-marathon --master zk://${HOST_IP}:2181/mesos --zk zk://${HOST_IP}:2181/marathon
+
+# start mesos slave
+docker run --rm -d \
+--name mesos_slave_1 \
+--entrypoint="mesos-slave" \
+-e "MESOS_MASTER=zk://${HOST_IP}:2181/mesos" \
+-e "MESOS_LOG_DIR=/var/log/mesos" \
+-e "MESOS_LOGGING_LEVEL=INFO" \
+garland/mesosphere-docker-mesos-master:latest
+
+#############################################################
+
 step by step setting in centos 7
 https://www.javacodegeeks.com/2016/06/using-mapr-mesos-marathon-docker-apache-spark-deploy-run-first-jobs-containers.html
 
