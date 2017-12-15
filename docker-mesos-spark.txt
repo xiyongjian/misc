@@ -1,3 +1,53 @@
+debian, run all in one
+export HOST_IP=192.168.0.10
+# first part for slave , second part for master
+docker run --net=host --privileged \
+  -e MESOS_MASTER=zk://${HOST_IP}:2181/mesos \
+  -e MESOS_SWITCH_USER=0 \
+  -e MESOS_CONTAINERIZERS=docker,mesos \
+  -e MESOS_LOG_DIR=/var/log/mesos \
+  -e MESOS_WORK_DIR=/var/tmp/mesos \
+  -e MESOS_LAUNCHER=posix \
+  -e MESOS_SYSTEMD_ENABLE_SUPPORT=false \
+  \
+  -e MESOS_QUORUM=1 \
+  -e MESOS_REGISTRY=in_memory \
+  \
+  -e HOST_IP=${HOST_IP} \
+  -v "$(pwd)/log/mesos:/var/log/mesos" \
+  -v "$(pwd)/tmp/mesos:/var/tmp/mesos" \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /cgroup:/cgroup \
+  -v /sys:/sys \
+  -v /usr/local/bin/docker:/usr/local/bin/docker \
+  -v "/opt/spark-2.2.1-bin-hadoop2.7:/opt/spark" \
+  -it xyj/mesos /bin/bash
+
+within docker, run : 
+# run master
+export MESOS_PORT=5050
+export MESOS_ZK=zk://192.168.0.10:2181/mesos
+export MESOS_QUORUM=1
+export MESOS_REGISTRY=in_memory
+export MESOS_LOG_DIR=/var/log/mesos
+export MESOS_WORK_DIR=/var/tmp/mesos
+mesos-master --ip=192.168.0.10
+#run slave
+export SPARK_HOME=/opt/spark
+export MESOS_PORT=5051
+export MESOS_MASTER=zk://192.168.0.10:2181/mesos
+export MESOS_SWITCH_USER=0
+export MESOS_CONTAINERIZERS=docker,mesos
+export MESOS_LOG_DIR=/var/log/mesos
+export MESOS_WORK_DIR=/var/tmp/mesos
+export MESOS_LAUNCHER=posix
+export MESOS_SYSTEMD_ENABLE_SUPPORT=false
+mesos-slave
+#run zookeeper
+/usr/share/zookeeper/bin/zkServer.sh start
+
+###########################################################################
+
 centos7 install mesos/zookeeper/marathon/......
 update repo:
   rpm -Uvh http://repos.mesosphere.io/el/7/noarch/RPMS/mesosphere-el-repo-7-1.noarch.rpm  
@@ -128,7 +178,8 @@ Browse
 
 at mesos master, setup spark (install?), then setup env
 (download : https://spark.apache.org/downloads.html)
-export MESOS_NATIVE_LIBRARY=/usr/local/lib/libmesos.so
+?? export MESOS_NATIVE_LIBRARY=/usr/local/lib/libmesos.so
+export MESOS_NATIVE_JAVA_LIBRARY=/usr/local/lib/libmesos.so
 export SPARK_EXECUTOR_URI=http://192.168.0.7/download/ spark-1.2.1-bin-haoop2.4.tgz
 export MASTER=mesos://127.0.1.1:5050
 
