@@ -1,3 +1,9 @@
+combine ENTRYPOINT + CMD, to get start command line
+overrid by docker command line, entrypoint
+  docker run --entrypoint [my_entrypoint] test  
+override cmd
+  docker run test [command 1] [arg1] [arg2] 
+  
 docker inside docker :  https://hub.docker.com/_/docker/
   docker run --privileged --name some-docker -d docker:stable-dind
 
