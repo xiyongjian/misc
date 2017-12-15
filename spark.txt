@@ -1,0 +1,5 @@
+spark resource framework
+https://github.com/datastrophic/mesos-workshop/tree/master/src/main/scala/io/datastrophic/mesos/drf
+http://datastrophic.io/resource-allocation-in-mesos-dominant-resource-fairness-explained/
+
+
