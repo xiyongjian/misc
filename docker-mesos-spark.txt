@@ -1,5 +1,9 @@
+centos7 install mesos/zookeeper/marathon/......
+update repo:
+  rpm -Uvh http://repos.mesosphere.io/el/7/noarch/RPMS/mesosphere-el-repo-7-1.noarch.rpm  
+yum other mesos..
 
-
+#######################################################################
 setup docker container cluster for mesos/...
   https://medium.com/@gargar454/deploy-a-mesos-cluster-with-7-commands-using-docker-57951e020586
   http://czcodezone.blogspot.ca/2016/03/setup-mesos-cluster-in-centos-vms.html
