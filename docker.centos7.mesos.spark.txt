@@ -1,0 +1,41 @@
+get centos7 image from dockerhub
+  https://hub.docker.com/_/centos/
+  
+centos7 install mesos/zookeeper/marathon/......
+update repo:
+  rpm -Uvh http://repos.mesosphere.io/el/7/noarch/RPMS/mesosphere-el-repo-7-1.noarch.rpm  
+yum other mesos..
+yum packages like screen, vim, less, .....
+
+or pull from dockerhub
+  docker pull xiyongjian/mesos-cluster
+
+install spark in host, /opt/spark-xxxx
+
+run docker : 
+-- run with all host network and privileged
+docker run -d --net=host --privileged \
+  -v /opt/spark-2.2.1-bin-hadoop2.7:/opt/spark  \
+  --entrypoint="/usr/sbin/sshd" \
+  centos7 -D -p 10022
+
+ssh 10022 to docker box
+--------- run command (in separate screen window) -----------------
+# start zookeeper
+/opt/mesosphere/zookeeper/bin/zkServer.sh start-foreground
+
+# start master
+mesos-master --zk=zk://localhost:2181/mesos --work_dir=/var/tmp/mesos --log_dir=/var/log/mesos --quorum=1
+
+# start slave
+# must set environment first!!
+export MESOS_SYSTEMD_ENABLE_SUPPORT=false
+export MESOS_LAUNCHER=posix
+mesos-slave --work_dir=/var/tmp/mesos --log_dir=/var/log/mesos --master=zk://localhost:2181/mesos
+
+/opt/spark/bin/spark-shell --master mesos://192.168.0.11:5050
+/opt/spark/bin/spark-submit --class org.apache.spark.examples.SparkPi --master mesos://192.168.0.11:5050 /opt/spark/examples/jars/spark-examples_2.11-2.2.1.jar 10
+/opt/spark/bin/spark-submit --class org.apache.spark.examples.JavaWordCount --master mesos://192.168.0.11:5050 /opt/spark/examples/jars/spark-examples_2.11-2.2.1.jar anaconda-ks.cfg
+------------- END ------------------
+
+check more example : https://github.com/apache/spark/tree/master/examples/src/main
