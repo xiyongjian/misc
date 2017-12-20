@@ -1,44 +1,32 @@
->>> import json
->>> import requests
->>>
->>> url='http://graph.facebook.com/v2.3/123123
->>> head = {'Content-type':'application/json',
-             'Accept':'application/json'}
->>> payload = {'name':'Saravanan',
-               'Designation':'Architect',
-               'Orgnization':'Cisco Systems'}
-
->>> payld = json.dumps(payload)
->>> ret = requests.post(url,header=head,data=payld)
->>> ret.status_code
-200
-
+'''
 
 @author: xyj
 '''
-import json
-from datetime import datetime
 
-print(json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}]))
+import os
 
-# cdr = {
-#    'DOMAIN' : 'dev' 
-#     }
-cdr = {}
-cdr['DOMAIN'] = 'bluemsp'
-cdr['FROM_USER_ID'] = 1234
-cdr['DURATION'] = 300
-cdr['TO_USERS'] = [{"TO_USER_ID" : 1001}, {"TO_USER_ID" : 1002}]
+def testRemoveFile() :
+    myfile="/tmp/foo.txt"
+    print("remove file : ", os.path.abspath(myfile));
 
-payld = json.dumps(cdr, indent=4)
-print("cdr json payld : " + payld)
+    ## if file exists, delete it ##
+    if os.path.isfile(myfile):
+        os.remove(myfile)
+    else:    ## Show an error ##
+        print("Error: %s file not found" % myfile)
+    
 
-start_time = '2017-12-08-13-27-39'
-ds = datetime.strptime(start_time, '%Y-%m-%d-%H-%M-%S')
-de =  datetime.now();
+def testRemoveFile2(myfile) :
+    print("remove file : ", os.path.abspath(myfile));
+    ## try to delete file ##
+    try:
+        os.remove(myfile)
+    except OSError as e:  ## if failed, report it back to the user ##
+        print ("Error: %s - %s." % (e.filename,e.strerror))
 
-print("date string : ", start_time)
-print("parsed date : ", str(ds))
-print("current : ", str(de))
-print("diff : ", de - ds)
-print("diff (seconds) : ", int((de - ds).total_seconds()))
+if __name__ == '__main__':
+    testRemoveFile()
+
+    ## get input ##
+    #myfile= raw_input("Enter file name to delete : ")
+    testRemoveFile2("randomfile");
