@@ -15,7 +15,7 @@ in app web.xml
 </web-app>
 
 another example
-server.xml
+server.xml, server.xml file. The code should be added in the GlobalNamingResources
 <Resource name="jdbc/MyDB" 
       global="jdbc/MyDB" 
       auth="Container" 
@@ -30,7 +30,7 @@ server.xml
       minIdle="5" 
       maxWait="10000"/>
 
-server's context.xml
+server's context.xml, server context.xml file.
 <ResourceLink name="jdbc/MyLocalDB"
                 global="jdbc/MyDB"
                 auth="Container"
