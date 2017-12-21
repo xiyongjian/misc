@@ -1,43 +1,86 @@
-https://github.com/GoogleCloudPlatform/python-docs-samples
+in server context.xml <context>
+<Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
+               maxActive="100" maxIdle="30" maxWait="10000"
+               username="javauser" password="javadude" driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://localhost:3306/javatest"/>
+               
+in app web.xml
+ <web-app>
+  <resource-ref>
+      <description>DB Connection</description>
+      <res-ref-name>jdbc/TestDB</res-ref-name>
+      <res-type>javax.sql.DataSource</res-type>
+      <res-auth>Container</res-auth>
+  </resource-ref>
+</web-app>
 
-'''
+another example
+<Resource name="jdbc/MyDB" 
+      global="jdbc/MyDB" 
+      auth="Container" 
+      type="javax.sql.DataSource" 
+      driverClassName="oracle.jdbc.driver.OracleDriver" 
+      url="jdbc:oracle:thin:@localhost:1521:orcl" 
+      username="hr" 
+      password="oracle" 
+      
+      maxActive="100" 
+      maxIdle="20" 
+      minIdle="5" 
+      maxWait="10000"/>
 
-@author: xyj
-'''
+<ResourceLink name="jdbc/MyLocalDB"
+                global="jdbc/MyDB"
+                auth="Container"
+                type="javax.sql.DataSource" />
 
-import os
-import uuid
-import tempfile
+to use : 
+		ctx = new InitialContext();
+		DataSource ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/MyLocalDB");
+		con = ds.getConnection();
+		stmt = con.createStatement();
+		rs = stmt.executeQuery("select empid, name from Employee");
+		PrintWriter out = response.getWriter();
+            
 
-def testTemp() :
-    tmp_dir = tempfile.gettempdir() # prints the current temporary directory
-    print("temp folder : ", tmp_dir);
-    unique_filename = tmp_dir + os.sep + str(uuid.uuid4()) + ".wav";
-    print("temp file : " + unique_filename);
+setup webapp context parameter
+<web-app>
+<context-param>
+<param-name>jdbcURL</param-name>
+<param-value>jdbc:oracle:thin:@myhost:1521</param-value>
+</context-param>
+</web-app>
 
-def testRemoveFile() :
-    myfile="/tmp/foo.txt"
-    print("remove file : ", os.path.abspath(myfile));
+to use:
+case 0, in appliation?
+Context initContext = new InitialContext();
+Context envContext  = (Context)initContext.lookup("java:/comp/env");
+DataSource ds = (DataSource)envContext.lookup("jdbc/myoracle");
+Connection conn = ds.getConnection();
 
-    ## if file exists, delete it ##
-    if os.path.isfile(myfile):
-        os.remove(myfile)
-    else:    ## Show an error ##
-        print("Error: %s file not found" % myfile)
-    
+case 1, in servlet
 
-def testRemoveFile2(myfile) :
-    print("remove file : ", os.path.abspath(myfile));
-    ## try to delete file ##
-    try:
-        os.remove(myfile)
-    except OSError as e:  ## if failed, report it back to the user ##
-        print ("Error: %s - %s." % (e.filename,e.strerror))
+  public void init(ServletConfig config)throws ServletException {
+    this.config = config;
+    super.init(config);
+  }
+  
+  .....
+     ServletContext application = config.getServletContext();
+      String driverclass = 
+        application.getInitParameter("driverclass"); 
+      String jdbcURL = application.getInitParameter("jdbcURL"); 
 
-if __name__ == '__main__':
-    testRemoveFile()
+case 2
+@WebListener
+public class AppContextListener implements ServletContextListener {
 
-    ## get input ##
-    #myfile= raw_input("Enter file name to delete : ")
-    testRemoveFile2("randomfile");
-    testTemp()
+    public void contextInitialized(ServletContextEvent servletContextEvent) {
+    	ServletContext ctx = servletContextEvent.getServletContext();
+    	
+    	//initialize DB Connection
+    	String dbURL = ctx.getInitParameter("dbURL");
+    	String user = ctx.getInitParameter("dbUser");
+    	String pwd = ctx.getInitParameter("dbPassword");
+    	;;;
+        
