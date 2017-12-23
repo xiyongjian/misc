@@ -1,0 +1,9 @@
+android studio, run simulator
+Cannot launch AVD in emulator.
+Output:
+libGL error: unable to load driver: radeonsi_dri.so
+solution:
+update libstdc++ lib
+$ cd Android/Sdk/emulator/lib64/libstdc++
+$ mv libstdc++.so.6 libstdc++.so.6.bak
+$ ln -s /usr/lib64/libstdc++.so.6
