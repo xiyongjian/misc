@@ -1,3 +1,6 @@
+get more archetype from maven, new maven project -> config -> add remote ..
+   http://repo1.maven.org/maven2/archetype-catalog.xml
+   
 eclipse + scala + maven
 plugins
    scala IDE
