@@ -1,3 +1,10 @@
+Hi, my name is James. I started at All Blue in March 2017. 
+I'm working in ngDesk developement most of time, and other projects as needed.
+I have Ph.D degree of computer science, at Missouri University.
+As system engineer, I enjoy developing all kind of software solutions for our customer and exploring new technologies. 
+In 2018, we'll deliver our AI feature in ngDesk.
+
+
 @WebServlet(
     urlPatterns = {"/foo", "/bar", "/cool"}
 )
