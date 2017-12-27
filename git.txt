@@ -1,0 +1,3 @@
+dealing with eof new line
+  http://adaptivepatchwork.com/2012/03/01/mind-the-end-of-your-line/
+  http://mike.meessen.biz/blog/?p=368
