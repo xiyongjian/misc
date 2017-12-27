@@ -1,0 +1,9 @@
+for unit testing, separate the environemnt/API code and core logic code
+
+in class, provide separate ctro or special factory method to builjd naked/core logic object for testing purpose.
+glue code for testing  (main -> other stuff)
+
+API neutural code focus on core logic
+
+spring boot testing, for entity/repository, service, controller and MVC total testing.
+    http://www.baeldung.com/spring-boot-testing
