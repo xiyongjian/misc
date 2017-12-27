@@ -1,3 +1,7 @@
+test watcher, logging junit test. refer
+The Art of Test Driven Development: Logging JUnit Test Results
+    https://garygregory.wordpress.com/2015/09/14/the-art-of-test-driven-development-logging-junit-test-results/
+    
 for unit testing, separate the environemnt/API code and core logic code
 
 in class, provide separate ctro or special factory method to builjd naked/core logic object for testing purpose.
