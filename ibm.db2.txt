@@ -1,0 +1,8 @@
+xmlquery example:
+this may selelct multiple rows
+   SELECT xmlcast(XMLQuery('$d/cdr/variables/originated_legs' PASSING DETAIL as "d") as varchar(40)) FROM ng.call_cdrs
+select on row fro the first value
+   SELECT xmlcast(XMLQuery('$d/cdr/variables/originated_legs[2]' PASSING DETAIL as "d") as varchar(40)) FROM ng.call_cdrs
+check exists
+   SELECT XMLExists('$d/cdr/variables/originated_legs[1]' PASSING DETAIL as "d") FROM ng.call_cdrs
+detail is xml column  
