@@ -1,0 +1,68 @@
+------------------------------------------------------------------------------------------------
+https://dev.mysql.com/doc/refman/5.7/en/creating-ssl-files-using-openssl.html
+generate certification/keys
+
+# Create clean environment
+rm -rf newcerts
+mkdir newcerts && cd newcerts
+
+# Create CA certificate
+openssl genrsa 2048 > ca-key.pem
+openssl req -new -x509 -nodes -days 3600 \
+        -key ca-key.pem -out ca.pem
+
+# Create server certificate, remove passphrase, and sign it
+# server-cert.pem = public key, server-key.pem = private key
+openssl req -newkey rsa:2048 -days 3600 \
+        -nodes -keyout server-key.pem -out server-req.pem
+#looks like this command remove the public key, only key private key
+openssl rsa -in server-key.pem -out server-key.pem
+openssl x509 -req -in server-req.pem -days 3600 \
+        -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem
+
+# Create client certificate, remove passphrase, and sign it
+# client-cert.pem = public key, client-key.pem = private key
+openssl req -newkey rsa:2048 -days 3600 \
+        -nodes -keyout client-key.pem -out client-req.pem
+openssl rsa -in client-key.pem -out client-key.pem
+openssl x509 -req -in client-req.pem -days 3600 \
+        -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out client-cert.pem
+
+verify
+  openssl verify -CAfile ca.pem server-cert.pem client-cert.pem
+  openssl x509 -text -in ca.pem
+  openssl x509 -text -in server-cert.pem
+  openssl x509 -text -in client-cert.pem
+------------------------------------------------------------------------------------------------
+setup mysql config my.cnf 
+(/usr/local/mariadb10/etc/mysql/my.cnf -> /var/packages/MariaDB10/etc/my.cnf)
+[mysqld]
+ssl-ca=/var/packages/MariaDB10/etc/certs/ca.pem
+ssl-cert=/var/packages/MariaDB10/etc/certs/server-cert.pem
+ssl-key=/var/packages/MariaDB10/etc/certs/server-key.pem
+
+innodb_buffer_pool_size=1024M
+
+general_log_file        = /var/log/mysql/mysql.log
+general_log             = 1
+------------------------------------------------------------------------------------------------
+connection from client :
+  jdbc:mysql://nexusenergy.diskstation.me:23307/nexus?verifyServerCertificate=false&useSSL=true&requireSSL=true
+and provide user/pass
+
+after connection, verify connection is ssl:
+  show status like '%ssl%'
+
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+start mariadb command line:
+  /bin/sh /usr/local/mariadb10/bin/mysqld_safe --datadir=/var/packages/MariaDB10/target/mysql --pid-file=/run/mysqld/mysqld10.pid
+it will start this one :
+  /usr/local/mariadb10/bin/mysqld --basedir=/usr/local/mariadb10 --datadir=/var/packages/MariaDB10/target/mysql --plugin-dir=/usr/local/mariadb10/lib/mysql/plugin --user=mysql --log-error=/var/packages/MariaDB10/target/mysql/NexusEnergy_1.err --pid-file=/run/mysqld/mysqld10.pid --socket=/run/mysqld/mysqld10.sock --port=3307
+
