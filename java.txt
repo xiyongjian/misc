@@ -1,0 +1,3 @@
+disable ssl verify
+ -Dcom.sun.net.ssl.checkRevocation=false -Dtrust_all_cert=true
+ 
