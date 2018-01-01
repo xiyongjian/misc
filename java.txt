@@ -1,3 +1,7 @@
 disable ssl verify
  -Dcom.sun.net.ssl.checkRevocation=false -Dtrust_all_cert=true
  
+solve the java ssl issue (in linux) : 
+  java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty
+run this command to update certs
+  /var/lib/dpkg/info/ca-certificates-java.postinst configure
