@@ -1,3 +1,15 @@
+docker run mysql/mariadb
+docker run --rm --name db2 \
+        -e MYSQL_ROOT_PASSWORD=password \
+        -p 23306:3306 \
+        -p 20022:22 \
+        -v /var/lib/mariadb/db2.conf:/etc/mysql/mariadb.conf.d/ \
+        -v /var/lib/mariadb/db2:/var/lib/mysql/ \
+        -v /var/lib/mariadb/stage:/root/stage/ \
+        -d mariadb_ssh:10.2.10
+
+
+
 combine ENTRYPOINT + CMD, to get start command line
 overrid by docker command line, entrypoint
   docker run --entrypoint [my_entrypoint] test  
