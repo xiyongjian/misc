@@ -28,6 +28,9 @@ iface eth0 inet static
 systemctl restart networking
 or just reboot system
 
+restart interface
+    ifup <if>
+    ifdown <if>
 -------------------------------------------------------------------------------------
 tk wireless setup
 # ip a
