@@ -1,4 +1,27 @@
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+tk wireless setup
+# ip a
+# iwconfig
+# ip link set wlan0 up
+# iwlist scan
 
+ip link set wlan0 up
+ip link show wlan0
+
+according to scan result, setup config
+  wpa_passphrase Your_SSID Your_passwd > /etc/wpa_supplicant.conf
+
+setup using wpa
+  wpa_supplicant -B -D wext -i wlan0 -c /etc/wpa_supplicant.conf
+
+
+-------------------------------------------------------------------------------------
+tk package setup
 disable key verify for repo!
  apt-get --allow-unauthenticated upgrade
 setup key
@@ -18,6 +41,7 @@ then
 add my list and run 
 apt-get update
 
+-------------------------------------------------------------------------------------
 
 check package from which repo
 apt policy <pkgname>
