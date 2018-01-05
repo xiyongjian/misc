@@ -3,4 +3,5 @@ scipy notebook,  https://hub.docker.com/r/jupyter/scipy-notebook/
 run (must be 'save/' with backslash!)
     docker run -it --rm -p 8888:8888 \
     -v /u01/save:/u10/save/ \
+    -v /u01/save/work:/home/jovyan/work/ \
     jupyter/scipy-notebook
