@@ -1,3 +1,26 @@
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+tk jupyter notebook server setup
+miniconda, conda setup env 'notebook', inside, install jupyter & notebook
+(default kernel python3)
+  jupyter kernelspec list
+  jupyter notebook --help
+  
+jupyter notebook --generate-config
+ -> c:\Sandbox\xyj\xyj\user\current\.jupyter\jupyter_notebook_config.py
+
+add two line , binding ip and disable cross origin
+
+c.NotebookApp.ip = '*'
+c.NotebookApp.allow_origin = '*'
+
+-----------------------------------------------------------------------------------
 run python notebook for data analyzing, get the docker and run it
   https://hub.docker.com/r/jupyter/scipy-notebook/
 run
