@@ -1,0 +1,6 @@
+tk python
+scipy notebook,  https://hub.docker.com/r/jupyter/scipy-notebook/
+run
+    docker run -it --rm -p 8888:8888 \
+    -v /u01/save:/u10/save \
+    jupyter/scipy-notebook
