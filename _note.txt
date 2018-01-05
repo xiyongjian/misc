@@ -1,4 +1,12 @@
 --------------------------------------------------------------------
+tk python big data process
+numpy
+  http://nbviewer.jupyter.org/gist/manujeevanprakash/7e47301f0b50a98232ca
+python structure
+  https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/
+pandas
+  http://pandas.pydata.org/pandas-docs/stable/10min.html
+
 --------------------------------------------------------------------
 --------------------------------------------------------------------
 --------------------------------------------------------------------
