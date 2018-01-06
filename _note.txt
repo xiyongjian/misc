@@ -1,4 +1,9 @@
 --------------------------------------------------------------------
+data analysis, contest
+https://datahack.analyticsvidhya.com/contest/all/
+
+--------------------------------------------------------------------
+
 tk python big data process
 numpy
   http://nbviewer.jupyter.org/gist/manujeevanprakash/7e47301f0b50a98232ca
