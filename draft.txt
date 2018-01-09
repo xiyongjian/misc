@@ -1,3 +1,6 @@
+programming  amazon web service
+https://aws.amazon.com/code/programming-amazon-web-services-example-code/?tag=code%23keywords%23java
+
 Good evening everyone. For those of you working from your personal computers this week, please download the following vpn client. You will need to create a new vpn connect and point it to 192.67.64.50 and provide your network credentials (you'll select NT Authentication). Let me know if you run into any issues.
 
 http://softether-download.com/files/softether/v4.23-9647-beta-2017.10.18-tree/Windows/SoftEther_VPN_Client/softether-vpnclient-v4.23-9647-beta-2017.10.18-windows-x86_x64-intel.exe
