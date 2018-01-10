@@ -240,3 +240,82 @@ public class Route53Sample {
 
 }
 
+
+
+package xiyj.route53;
+
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.route53.AmazonRoute53Async;
+import com.amazonaws.services.route53.AmazonRoute53Client;
+import com.amazonaws.services.route53.model.Change;
+import com.amazonaws.services.route53.model.ChangeAction;
+import com.amazonaws.services.route53.model.ChangeBatch;
+import com.amazonaws.services.route53.model.ChangeResourceRecordSetsRequest;
+import com.amazonaws.services.route53.model.ChangeResourceRecordSetsResult;
+import com.amazonaws.services.route53.model.ListResourceRecordSetsRequest;
+import com.amazonaws.services.route53.model.ListResourceRecordSetsResult;
+import com.amazonaws.services.route53.model.RRType;
+import com.amazonaws.services.route53.model.ResourceRecord;
+import com.amazonaws.services.route53.model.ResourceRecordSet;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+	private static AmazonRoute53Client getAmazonRoute53Client() {
+		String aWSAccessId = "AKIAJIHAMAQSFWKKTB2Q";
+		String aWSSecretKey = "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";
+
+		AWSCredentials credentials = new BasicAWSCredentials(aWSAccessId, aWSSecretKey);
+		AmazonRoute53Client route53 = new AmazonRoute53Client(credentials);
+		return route53;
+	}
+
+	public static void main(String[] args) {
+		System.out.println("to create client");
+		AmazonRoute53Client route53 = getAmazonRoute53Client();
+		String hostedZoneID = "Z3MNENJUQP841O";
+		{
+			System.out.println("to list resource");
+			ListResourceRecordSetsRequest listResourceRecordSetsRequest = new ListResourceRecordSetsRequest()
+					.withHostedZoneId(hostedZoneID);
+			// .withStartRecordType(RRType.SRV);
+			ListResourceRecordSetsResult listResourceRecordSetsResult = route53
+					.listResourceRecordSets(listResourceRecordSetsRequest);
+
+			System.out.println("result : " + listResourceRecordSetsResult.toString());
+		}
+
+		if (true) {
+			// AmazonRoute53 route53 = AmazonRoute53ClientBuilder.standard() //
+			// .withRegion(REGION) //
+			// .withCredentials(new AWSStaticCredentialsProvider(new
+			// BasicAWSCredentials(ACCESS_KEY, SECRET_KEY)))
+			// .build();
+
+			System.out.println("try to insert (UPSERT) new SRV record");
+
+			ResourceRecordSet recordSet = new ResourceRecordSet() //
+					.withType(RRType.SRV) //
+					.withName("_sip._udp.james.ngdesk.com") //
+					.withTTL(300L) //
+					.withResourceRecords(new ResourceRecord().withValue("100 1 5060 webrtc-da3-1.ngdesk.com"));
+
+			Change change = new Change() //
+					.withAction(ChangeAction.UPSERT) //
+					.withResourceRecordSet(recordSet);
+
+			// Send the request and get the response.
+			ChangeResourceRecordSetsResult result = route53
+					.changeResourceRecordSets(new ChangeResourceRecordSetsRequest() //
+							.withHostedZoneId(hostedZoneID) //
+							.withChangeBatch(new ChangeBatch().withChanges(change)));
+
+			// Print the result
+			System.out.println(result.getChangeInfo());
+		}
+
+	}
+}
