@@ -1,3 +1,16 @@
 %windir%\System32\cmd.exe "/K" E:\ProgramData\Anaconda3\Scripts\activate.bat E:\ProgramData\Anaconda3
 
 %windir%\System32\cmd.exe "/K" c:\Users\jxi\AppData\Local\Continuum\miniconda3\Scripts\activate.bat c:\Users\jxi\AppData\Local\Continuum\miniconda3\
+
+
+while (!response.isDone()) {
+    ApiFuture<LongRunningRecognizeMetadata> future = response.peekMetadata();
+    if (future != null) {
+        LongRunningRecognizeMetadata meta = future.get();
+        if (meta != null) {
+             int percent = meta.getProgressPercent();
+             System.out.println(String.format("Percent complete: %s%%", percent));
+        }
+    }
+    Thread.sleep(500);
+}
