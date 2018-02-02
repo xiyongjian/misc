@@ -1,3 +1,8 @@
+
+db2 "select procname from syscat.procedures where procschema = 'MYSCHEMA'"
+select schemaname from syscat.schemata
+
+
 https://www.ibm.com/support/knowledgecenter/en/SSEPGG_9.5.0/com.ibm.db2.luw.apdv.python.doc/doc/t0054388.html
 
 
