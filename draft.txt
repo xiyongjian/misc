@@ -1,3 +1,284 @@
+-------------------------------------------------------------------------------------
+tk todo
+jdbc connection pool setup  (10/100?)
+
+-------------------------------------------------------------------------------------
+tk setup database in tomcat
+tomcat server.xml
+    <Resource auth="Container" driverClassName="com.ibm.db2.jcc.DB2Driver" global="jdbc/db2" 
+    	maxActive="100" maxIdle="20" maxWait="10000" minIdle="5" 
+    	name="jdbc/db2" password="db2inst1" type="javax.sql.DataSource" 
+    	url="jdbc:db2@192.168.155.100:50000/ngdesk" username="db2inst1"/>
+tomcat context.xml
+      <ResourceLink name="jdbc/fs-db2"
+                global="jdbc/db2"
+                auth="Container"
+                type="javax.sql.DataSource" />
+web app's web.xml
+	<resource-ref>
+		<description>DB Connection</description>
+		<res-ref-name>jdbc/fs-db2</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+
+-------------------------------------------------------------------------------------
+tk setup freeswtich gsr service in linux
+[root@webrtc-da3-1 dialplan]# cat  /etc/systemd/system/freeswitch-gsr.service
+[Unit]
+Description=freeswitch-gsr
+
+[Service]
+ExecStart=/bin/bash -c "while true; do sleep 5; echo 'freeswitch-gsr service running ...' ; echo 'error here..' >&2 ; done"
+
+[Install]
+WantedBy=multi-user.target
+
+
+systemctl daemon-reload
+systemctl start  freeswitch-gsr.service
+
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+tk multiple tenant & 
+
+- DNS SRV dynamically setup, programmatically
+
+- API to create tenant, ext#
+createTenant(companyId)
+createExtension(companyId, username, extNumber, extPassword);
+
+- backend db storate, table structure
+information to keep :
+  tenant id		-> company id
+  tenant name 	-> company name
+  tenant domain	-> <company_name>.ngdesk.com
+ 
+-------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------
+tk xml cdr recod process
+inbound (caller) and outbound (callee)
+
+all inbound xml create a record, and outbound fill/append to existing record
+
+if it's voice mail
+   ....
+else if (inbound) 
+else if (outbound)
+else 
+	 thorw exception
+
+-------------------------------------------------------------------------------------
+table create for CDR :
+DROP TABLE NG.CALL_RECORD_TO_EXTS ;
+DROP TABLE NG.CALL_RECORDS ;
+
+CREATE TABLE NG.CALL_RECORDS (
+  CALL_RECORD_ID        INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
+  COMPANY_ID            INTEGER,
+  FROM_EXT              INTEGER,     -- FROM EXTENSION #
+  DATE_CREATED          TIMESTAMP,
+  DURATION              INTEGER,
+  TRANSCRIPT            CLOB(50M),
+  CALL_CDR_ID			INTEGER,
+  PRIMARY KEY (CALL_RECORD_ID),
+  FOREIGN KEY (CALL_CDR_ID) REFERENCES  NG.CALL_CDRS (CALL_CDR_ID)
+);
+
+CREATE TABLE NG.CALL_RECORD_TO_EXTS (
+  CALL_RECORD_TO_EXT_ID    INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
+  CALL_RECORD_ID            INTEGER,
+  TO_EXT                    INTEGER,
+  PRIMARY KEY (CALL_RECORD_TO_EXT_ID),
+  FOREIGN KEY (CALL_RECORD_ID) REFERENCES  NG.CALL_RECORDS (CALL_RECORD_ID)
+);
+
+-------------------------------------------------------------------------------------
+CDR table to store xml cdr
+
+DROP TABLE NG.CALL_CDRS ;
+CREATE TABLE NG.CALL_CDRS (
+  CALL_CDR_ID           INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
+  UUID          VARCHAR(36),
+  DATE_CALL		TIMESTAMP,
+  DIRECTION		VARCHAR(16),
+  DATE_CREATED  TIMESTAMP,
+  DETAIL        XML,
+  PRIMARY KEY (CALL_CDR_ID)
+);
+
+CREATE INDEX NG.CALL_CDR_UUID ON NG.CALL_CDRS (UUID);
+CREATE INDEX NG.CALL_CDR_DATE_CREATED ON NG.CALL_CDRS (DATE_CREATED);
+CREATE INDEX NG.CALL_CDR_DATE_CALL ON NG.CALL_CDRS (DATE_CALL);
+
+-- for transcripts, uuid may not needed
+DROP TABLE NG.CALL_CDR_TRANSCRIPTS ;
+CREATE TABLE NG.CALL_CDR_TRANSCRIPTS (
+  CALL_CDR_TRANSCRIPT_ID           INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
+  UUID  VARCHAR(64),
+  TRANSCRIPT            CLOB(50M),
+  PRIMARY KEY (CALL_CDR_TRANSCRIPT_ID)
+);
+
+
+-- using companies table for tenants
+
+DROP TABLE NG.TENANT_USERS;
+CREATE TABLE NG.TENANT_USERS (
+  TENANT_USER_ID           INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
+  COMPANY_ID            INTEGER,
+  USER_ID               INTEGER,
+  EXTENSION             INTEGER,
+  PASSWORD              VARCHAR(16),
+  VOICE_MAIL_PASSWORD           VARCHAR(16),
+  DATE_CREATED  TIMESTAMP,
+  PRIMARY KEY (TENANT_USER_ID)
+  -- , FOREIGN KEY (COMPANY_ID) REFERENCES NG.COMPANIES (COMPANY_ID)
+  , FOREIGN KEY (USER_ID) REFERENCES NG.USERS (USER_ID)
+);
+CREATE INDEX NG.TENANT_USER_IDX ON NG.TENANT_USERS(COMPANY_ID, EXTENSION);
+
+describe table ng.tenant_users;
+
+insert into ng.tenant_users (company_id, user_id, extension, password, voice_mail_password, date_created)
+  values (122, 579, 1001, '8888', '9999', current timestamp);
+insert into ng.tenant_users (company_id, user_id, extension, password, voice_mail_password, date_created)
+  values (122, 580, 1002, '8888', '9999', current timestamp);
+insert into ng.tenant_users (company_id, user_id, extension, password, voice_mail_password, date_created)
+  values (122, 579, 1003, '8888', '9999', current timestamp);
+insert into ng.tenant_users (company_id, user_id, extension, password, voice_mail_password, date_created)
+  values (122, 579, 1004, '8888', '9999', current timestamp);
+insert into ng.tenant_users (company_id, user_id, extension, password, voice_mail_password, date_created)
+  values (122, 579, 1005, '8888', '9999', current timestamp);
+insert into ng.tenant_users (company_id, user_id, extension, password, voice_mail_password, date_created)
+  values (122, 579, 1006, '8888', '9999', current timestamp);
+insert into ng.tenant_users (company_id, user_id, extension, password, voice_mail_password, date_created)
+  values (122, 579, 1007, '8888', '9999', current timestamp);
+insert into ng.tenant_users (company_id, user_id, extension, password, voice_mail_password, date_created)
+  values (122, 579, 1008, '8888', '9999', current timestamp);
+insert into ng.tenant_users (company_id, user_id, extension, password, voice_mail_password, date_created)
+  values (122, 579, 1009, '8888', '9999', current timestamp);
+
+select * from ng.tenant_users;
+
+sample user/company
+USER_ID     COMPANY_ID  USERNAME
+----------- ----------- ----------------------------------------------------------------
+        579         122 spencer
+        580         122 test
+        581         122 devAgent
+        582         122 saloon
+
+122, 
+COMPANY_ID  COMPANY_SUBDOMAIN
+----------- --------------------------------------------------------------------------------------------------------------------------------
+        122 subs
+
+
+
+DROP TABLE NG.CALL_RECORD_TO_USERS ;
+DROP TABLE NG.CALL_RECORDS ;
+
+CREATE TABLE NG.CALL_RECORDS (
+  CALL_RECORD_ID        INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
+  COMPANY_ID            INTEGER,
+  FROM_USER_ID          INTEGER,     -- FROM EXTENSION #
+  DATE_CREATED          TIMESTAMP,
+  DURATION              INTEGER,
+  TRANSCRIPT            CLOB(50M),
+  CALL_CDR_ID                   INTEGER,
+  PRIMARY KEY (CALL_RECORD_ID),
+  FOREIGN KEY (CALL_CDR_ID) REFERENCES  NG.CALL_CDRS (CALL_CDR_ID)
+);
+
+CREATE TABLE NG.CALL_RECORD_TO_USERS (
+  CALL_RECORD_TO_USER_ID    INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
+  CALL_RECORD_ID            INTEGER,
+  TO_USER_ID                INTEGER,
+  PRIMARY KEY (CALL_RECORD_TO_USER_ID),
+  FOREIGN KEY (CALL_RECORD_ID) REFERENCES  NG.CALL_RECORDS (CALL_RECORD_ID)
+);
+
+
+DROP TABLE NG.CALL_GSR_REQUESTS ;
+CREATE TABLE NG.CALL_GSR_REQUESTS (
+  CALL_RECORD_ID INTEGER,
+  NUM_OF_RETRIES INTEGER,
+  FOREIGN KEY (CALL_RECORD_ID) REFERENCES NG.CALL_RECORDS (CALL_RECORD_ID)
+ );
+
+-------------------------------------------------------------------------------------
+-- /ngDesk-fsapi/directory - doPost()
+header user-agent : freeswitch-xml/1.0
+header host : 192.168.151.170:8080
+header accept : */*
+header content-length : 1323
+header content-type : application/x-www-form-urlencoded
+param hostname : webrtc-da3-1.ngdesk.com
+param section : directory
+param tag_name : domain
+param key_name : name
+param key_value : tree.ngdesk.com
+param Event-Name : REQUEST_PARAMS
+param Core-UUID : 7fe48808-f65d-11e7-bdf0-0562b29cd662
+param FreeSWITCH-Hostname : webrtc-da3-1.ngdesk.com
+param FreeSWITCH-Switchname : webrtc-da3-1.ngdesk.com
+param FreeSWITCH-IPv4 : 172.31.248.50
+param FreeSWITCH-IPv6 : ::1
+param Event-Date-Local : 2018-01-11 15:43:48
+param Event-Date-GMT : Thu, 11 Jan 2018 20:43:48 GMT
+param Event-Date-Timestamp : 1515703428842488
+param Event-Calling-File : sofia_reg.c
+param Event-Calling-Function : sofia_reg_parse_auth
+param Event-Calling-Line-Number : 2820
+param Event-Sequence : 41292
+param action : sip_auth
+param sip_profile : internal
+param sip_user_agent : X-Lite release 5.0.3 stamp 88254
+param sip_auth_username : 1020
+param sip_auth_realm : tree.ngdesk.com
+param sip_auth_nonce : 7301f7ba-f707-11e7-a853-0562b29cd662
+param sip_auth_uri : sip:tree.ngdesk.com
+param sip_contact_user : 1020
+param sip_contact_host : 172.31.248.1
+param sip_to_user : 1020
+param sip_to_host : tree.ngdesk.com
+param sip_via_protocol : udp
+param sip_from_user : 1020
+param sip_from_host : tree.ngdesk.com
+param sip_call_id : 88254OGM1ZmY2ZDMzNmU4NDVhZmE1N2RhNTUxNTdhNjFmMjA
+param sip_request_host : tree.ngdesk.com
+param sip_auth_qop : auth
+param sip_auth_cnonce : 620421737d3e4bdd5088564a13c797c9
+param sip_auth_nc : 00000005
+param sip_auth_response : c0ee3ee70e72a1666d98de59a00cd297
+param sip_auth_method : REGISTER
+param client_port : 39277
+param key : id
+param user : 1020
+param domain : tree.ngdesk.com
+
+
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+
 
 db2 "select procname from syscat.procedures where procschema = 'MYSCHEMA'"
 select schemaname from syscat.schemata
