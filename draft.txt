@@ -1,3 +1,164 @@
+-- /ngDesk-fsapi/dialplan - doPost().
+request URI : /ngDesk-fsapi/dialplan
+attr com.ibm.websphere.servlet.uri_non_decoded : /ngDesk-fsapi/dialplan
+header User-Agent : freeswitch-xml/1.0
+header Host : 192.168.155.100:9085
+header Accept : */*
+header Content-Length : 5518
+header Content-Type : application/x-www-form-urlencoded
+param Hunt-Orig-Caller-ID-Name : Caller
+param variable_call_uuid : 09b72334-0b8e-11e8-adb7-4bddaf380f4d
+param Event-Calling-File : mod_dialplan_xml.c
+param variable_sip_full_to : <sip:00025061261403474@192.67.64.34:5080>
+param variable_sip_to_user : 00025061261403474
+param Channel-Call-State : RINGING
+param Event-Date-GMT : Tue, 06 Feb 2018 22:35:31 GMT
+param variable_sip_allow : INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, NOTIFY, MESSAGE, REGISTER, SUBSCRIBE, INFO
+param Unique-ID : 09b72334-0b8e-11e8-adb7-4bddaf380f4d
+param Hunt-Channel-Hangup-Time : 0
+param Event-Date-Timestamp : 1517956531101930
+param variable_sip_via_protocol : udp
+param Hunt-ANI : 15710000000
+param Hunt-Logical-Direction : inbound
+param variable_sip_network_ip : 185.107.83.35
+param variable_sip_contact_port : 5060
+param FreeSWITCH-Hostname : webrtc-da3-1.ngdesk.com
+param variable_sip_req_user : 00025061261403474
+param Caller-Source : mod_sofia
+param Hunt-Channel-Hold-Accum : 0
+param Caller-Channel-Name : sofia/external/15710000000@192.67.64.34:5080
+param Caller-Profile-Index : 1
+param Event-Calling-Function : dialplan_xml_locate
+param variable_uuid : 09b72334-0b8e-11e8-adb7-4bddaf380f4d
+param variable_sip_invite_stamp : 1517956531101930
+param Caller-Orig-Caller-ID-Name : Caller
+param Caller-Channel-Progress-Media-Time : 0
+param Event-Calling-Line-Number : 608
+param Caller-Screen-Bit : true
+param Hunt-Caller-ID-Name : Caller
+param variable_recovery_profile_name : external
+param Caller-Channel-Created-Time : 1517956531101930
+param Caller-Channel-Hangup-Time : 0
+param variable_sip_call_id : _SygsdtVNN8Ga46v7TexL1bX..
+param variable_sip_contact_user : 15710000000
+param Caller-Channel-Hold-Accum : 0
+param variable_audio_media_flow : sendrecv
+param Caller-Orig-Caller-ID-Number : 15710000000
+param Hunt-Channel-Created-Time : 1517956531101930
+param variable_sofia_profile_name : external
+param Channel-State-Number : 2
+param variable_ep_codec_string : CORE_PCM_MODULE.pcmu@8000h@20i@64000b,CORE_PCM_MODULE.pcma@8000h@20i@64000b
+param Call-Direction : inbound
+param variable_sip_full_via : SIP/2.0/UDP 158.37.165.111:5060;branch=z4hG4bK-966187-1---pQbmzluMhbkSYXX;rport=43788;received=185.107.83.35
+param variable_sip_from_host : 192.67.64.34
+param Hunt-Destination-Number : 00025061261403474
+param Channel-Name : sofia/external/15710000000@192.67.64.34:5080
+param Hunt-Context : public
+param Caller-Channel-Answered-Time : 0
+param variable_sip_via_host : 158.37.165.111
+param Hunt-Channel-Resurrect-Time : 0
+param Hunt-Direction : inbound
+param Caller-Privacy-Hide-Name : false
+param variable_sip_received_port : 43788
+param Caller-Channel-Progress-Time : 0
+param Hunt-Profile-Index : 1
+param variable_sip_from_tag : p2hzomPkyhqlu
+param Hunt-Privacy-Hide-Number : false
+param Hunt-Orig-Caller-ID-Number : 15710000000
+param Caller-Destination-Number : 00025061261403474
+param Hunt-Channel-Bridged-Time : 0
+param variable_rtp_use_codec_string : OPUS,G722,PCMU,PCMA,VP8
+param Caller-ANI : 15710000000
+param Answer-State : ringing
+param Core-UUID : 8c7c71f0-0b8b-11e8-ac0b-4bddaf380f4d
+param Channel-HIT-Dialplan : true
+param hostname : webrtc-da3-1.ngdesk.com
+param key_name : 
+param Caller-Channel-Transfer-Time : 0
+param variable_switch_r_sdp : v=0
+o=CiscoSystemsSIP-IPPhone 18338 11953 IN IP4 158.37.165.111
+s=SIP Call
+c=IN IP4 158.37.165.111
+t=0 0
+m=audio 20000 RTP/AVP 0 8 18 101
+a=rtpmap:0 pcmu/8000
+a=rtpmap:8 pcma/8000
+a=rtpmap:18 g729/8000
+a=fmtp:18 annexb=no
+a=rtpmap:101 G726-24/8000
+a=ptime:20
+param FreeSWITCH-IPv6 : ::1
+param Caller-Caller-ID-Number : 15710000000
+param FreeSWITCH-IPv4 : 172.31.248.50
+param Caller-Channel-Bridged-Time : 0
+param variable_sip_from_display : Caller
+param variable_sip_from_user_stripped : 15710000000
+param Channel-State : CS_ROUTING
+param Channel-Call-UUID : 09b72334-0b8e-11e8-adb7-4bddaf380f4d
+param Event-Sequence : 2260
+param Hunt-Channel-Answered-Time : 0
+param Caller-Channel-Last-Hold : 0
+param variable_sip_to_host : 192.67.64.34
+param variable_channel_name : sofia/external/15710000000@192.67.64.34:5080
+param Hunt-Unique-ID : 09b72334-0b8e-11e8-adb7-4bddaf380f4d
+param Presence-Call-Direction : inbound
+param Hunt-Channel-Progress-Time : 0
+param Hunt-Network-Addr : 185.107.83.35
+param Hunt-Profile-Created-Time : 1517956531101930
+param variable_sip_contact_uri : 15710000000@158.37.165.111:5060
+param Caller-Channel-Resurrect-Time : 0
+param Caller-Privacy-Hide-Number : false
+param tag_name : 
+param variable_sip_from_uri : 15710000000@192.67.64.34:5080
+param variable_sip_req_host : 192.67.64.34
+param variable_session_id : 88
+param Caller-Direction : inbound
+param Hunt-Dialplan : XML
+param variable_direction : inbound
+param variable_sip_full_from : "Caller" <sip:15710000000@192.67.64.34:5080>;tag=p2hzomPkyhqlu
+param Hunt-Channel-Transfer-Time : 0
+param Caller-Profile-Created-Time : 1517956531101930
+param Caller-Caller-ID-Name : Caller
+param Hunt-Username : 15710000000
+param variable_sip_received_ip : 185.107.83.35
+param variable_max_forwards : 70
+param variable_sip_from_port : 5080
+param Event-Name : REQUEST_PARAMS
+param Event-Date-Local : 2018-02-06 17:35:31
+param Hunt-Caller-ID-Number : 15710000000
+param variable_endpoint_disposition : DELAYED NEGOTIATION
+param Hunt-Privacy-Hide-Name : false
+param variable_sip_via_rport : 43788
+param variable_sip_via_port : 5060
+param variable_sip_contact_host : 158.37.165.111
+param Caller-Dialplan : XML
+param variable_sip_req_uri : 00025061261403474@192.67.64.34:5080
+param section : dialplan
+param Caller-Username : 15710000000
+param Hunt-Channel-Progress-Media-Time : 0
+param variable_sip_from_user : 15710000000
+param Caller-Network-Addr : 185.107.83.35
+param variable_sip_to_uri : 00025061261403474@192.67.64.34:5080
+param FreeSWITCH-Switchname : webrtc-da3-1.ngdesk.com
+param Hunt-Channel-Last-Hold : 0
+param Hunt-Source : mod_sofia
+param variable_sip_user_agent : egerherh
+param key_value : 
+param variable_video_media_flow : sendrecv
+param variable_sip_network_port : 43788
+param Caller-Logical-Direction : inbound
+param Hunt-Channel-Name : sofia/external/15710000000@192.67.64.34:5080
+param variable_sip_to_port : 5080
+param Caller-Unique-ID : 09b72334-0b8e-11e8-adb7-4bddaf380f4d
+param variable_sip_local_network_addr : 172.31.248.50
+param Hunt-Screen-Bit : true
+param Caller-Context : public
+param variable_sip_req_port : 5080
+user not found, send 404 NOT FOUND
+
+
+
+
 -------------------------------------------------------------------------------------
 tk todo
 jdbc connection pool setup  (10/100?)
