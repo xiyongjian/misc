@@ -1,3 +1,19 @@
+http://freeswitch-users.2379917.n2.nabble.com/Problem-with-enable-post-var-td7590893.html#a7590894
+I have found solution: 
+<binding name="configuration">
+      < param name="use-dynamic-url" value="yes"/>
+      < param name="gateway-url" value="http://example.com/freeswitch/configuration/${conf_name}" bindings="configuration"/> 
+</binding>
+
+In vars.xml 
+<X-PRE-PROCESS cmd="set" data="conf_name="/> (variable 'conf_name' is empty default) 
+
+And in dialplan 
+< action application='set_global' data='conf_name=test@test'/> 
+
+Set conf_name some value or make it empty (data='conf_name=')
+
+
 -- /ngDesk-fsapi/dialplan - doPost().
 request URI : /ngDesk-fsapi/dialplan
 attr com.ibm.websphere.servlet.uri_non_decoded : /ngDesk-fsapi/dialplan
