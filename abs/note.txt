@@ -1,0 +1,21 @@
+tk vpn access
+-------------------------------------------------------------
+http://www.softether-download.com/cn.aspx?product=softether
+softether
+192.67.64.50 and provide your network credentials (you'll select NT Authentication)
+
+-------------------------------------------------------------
+
+tk vdi
+-------------------------------------------------------------
+link : 
+https://allbluevdi01.ad.bluemsp.com/RDWeb/Pages/en-US/login.aspx?ReturnUrl=/RDWeb/Pages/en-US/Default.aspx
+
+-------------------------------------------------------------
+
+tk system wide
+-------------------------------------------------------------
+r...w...s, K..t..3, not for local, take note
+-------------------------------------------------------------
+-------------------------------------------------------------
+-------------------------------------------------------------
