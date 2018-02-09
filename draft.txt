@@ -1,3 +1,5 @@
+https://www.mkyong.com/java/quartz-joblistener-example/
+
 Description
 VENDOR_TRIP_LEG_INTEGRATION needs to also have the VENDOR_APPLICATION_CODE column added as a primary key. This will allow multiple records (one per vendor) in the event of a trip getting reassigned from one to the other.
 
