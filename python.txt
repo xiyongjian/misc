@@ -5,6 +5,12 @@
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
+tk miniconda conda anaconda windows desktop shortcut
+target
+%windir%\System32\cmd.exe "/K" E:\ProgramData\Anaconda3\Scripts\activate.bat E:\ProgramData\Anaconda3
+start :
+C:\Users\xyj
+
 -----------------------------------------------------------------------------------
 tk jupyter notebook server setup
 miniconda, conda setup env 'notebook', inside, install jupyter & notebook
