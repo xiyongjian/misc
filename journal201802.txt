@@ -20,3 +20,4 @@ values (S.company_id, S.user_id, S.ext, S.ext, S.ext, current timestamp)
 
 ESQL integration syntax
 https://www.ibm.com/support/knowledgecenter/en/SSMKHH_9.0.0/com.ibm.etools.mft.doc/ak05070_.htm
+https://www.ibm.com/support/knowledgecenter/en/SSMKHH_9.0.0/com.ibm.etools.mft.doc/ak04900_.htm
