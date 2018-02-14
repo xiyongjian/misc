@@ -1,0 +1,2 @@
+db2 resultset processing:
+https://www.ibm.com/support/knowledgecenter/SSEPGG_9.7.0/com.ibm.db2.luw.apdv.routines.doc/doc/c0011133.html
