@@ -1,2 +1,20 @@
 db2 resultset processing:
 https://www.ibm.com/support/knowledgecenter/SSEPGG_9.7.0/com.ibm.db2.luw.apdv.routines.doc/doc/c0011133.html
+
+db2 insert/merge skill, using values/temp table in merge
+-- delete from ng.user_extensions;
+--
+-- insert into ng.user_extensions (company_id, user_id, extension, password, voicemail_password, date_created)
+-- values (253, 1729, 1000, 1000, 1000, current timestamp);
+--
+-- select * from ng.user_extensions;
+--
+
+merge into ng.user_extensions as T
+using table (values (253, 1729, (select nvl(max(extension) + 1, 1000) from ng.user_extensions a where a.company_id = 253))) as S (company_id, user_id, ext)
+on T.company_id = S.company_id and T.user_id = S.user_id and T.extension = S.ext
+when not matched then insert (company_id, user_id, extension, password, voicemail_password, date_created)
+values (S.company_id, S.user_id, S.ext, S.ext, S.ext, current timestamp)
+;
+
+
