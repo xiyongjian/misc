@@ -44,3 +44,5 @@ sample ESQL with select
 				SET LOCAL_VARS.EXTENSION_TRACK = LOCAL_VARS.EXTENSION_TRACK + 1;
 	        END WHILE;
 
+in main.js, #76
+setup location.port : 9095 -> substring/concat to 7xxxx
