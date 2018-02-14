@@ -2,3 +2,5 @@
 www.coursera.org/learn/neural-networks-deep-learning/home/welcome
 rob@allbluesolutions.com
 
+tensorflow tutorial
+https://medium.com/mlreview/a-simple-deep-learning-model-for-stock-price-prediction-using-tensorflow-30505541d877
