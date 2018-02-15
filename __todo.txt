@@ -4,3 +4,6 @@ rob@allbluesolutions.com
 
 tensorflow tutorial
 https://medium.com/mlreview/a-simple-deep-learning-model-for-stock-price-prediction-using-tensorflow-30505541d877
+
+freeswitch conference
+https://txlab.wordpress.com/2012/09/17/setting-up-a-conference-bridge-with-freeswitch/
