@@ -2,3 +2,5 @@ conda install zipline
 
 conda create --name zipline python=3.5
 conda install -c quantopian zipline
+https://github.com/rainx/cn_stock_holidays
+pip install cn-stock-holidays
