@@ -1,182 +1,45 @@
 ps.setTimestamp(2, java.sql.Timestamp.from(java.time.Instant.now()));
 
-package com.ngdesk.fsapi;
+https://pythonprogramminglanguage.com/text-to-speech/
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Enumeration;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Scanner;
+gTTS text to speech
+gTTS is a module and command line utility to save spoken text to mp3.
+It uses the Google Text to Speech (TTS) API.
 
-import javax.naming.NamingException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-/**
- * Servlet implementation class DialPlan
- */
-@WebServlet("/dialplan")
-public class DialPlan extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public DialPlan() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		System.out.println("-- " + request.getRequestURI() + " - doGet().");
-
-		process(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		System.out.println("-- " + request.getRequestURI() + " - doPost().");
-
-		process(request, response);
-	}
-
-	protected void process(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		System.out.println("dialplan request URI : " + request.getRequestURI());
-		System.out.println("dialplan request URL : " + request.getRequestURL());
-		if (true || Config.isDebug()) {
-			Enumeration<String> attrs = request.getAttributeNames();
-			while (attrs.hasMoreElements()) {
-				String a = attrs.nextElement();
-				System.out.println("dialplan attr " + a + " : " + request.getAttribute(a));
-			}
-
-			Enumeration<String> headers = request.getHeaderNames();
-			while (headers.hasMoreElements()) {
-				String h = headers.nextElement();
-				System.out.println("dialplan header " + h + " : " + request.getHeader(h));
-			}
-
-			Map<String, String[]> params = request.getParameterMap();
-			for (Entry<String, String[]> e : params.entrySet()) {
-				System.out.println("dialplan param " + e.getKey() + " : " + String.join("|", e.getValue()));
-			}
-		}
-
-		if (true)
-			do {
-				response.setContentType("text/xml");
-
-				String dst_number = request.getParameter("Caller-Destination-Number");
-				// param domain : tree.ngdesk.com, get first part
-				String domain = request.getParameter("variable_domain_name");
-				System.out.println("dialplan param dst number : " + dst_number);
-				System.out.println("dialplan param domain : " + domain);
-				System.out
-						.println(String.format("generate dialplan, domain : %s, dst number : %s", domain, dst_number));
-
-				String subdomain = null;
-				try {
-					subdomain = domain.split("\\.")[0];
-					System.out.println(String.format("generate dialplan, subdomain : %s", subdomain));
-				} catch (Exception e1) {
-					System.out.println("can't parse subdomain");
-					System.out.println(e1.toString());
-					break;
-				}
-
-				if (subdomain == null || dst_number == null) {
-					System.out.println("subdomain or dst_number is null");
-					break;
-				}
-				
-				if (true && "1099".equals(dst_number)) {
-					System.out.println("get xml file, dialplan02.xml, resources : "
-							+ this.getServletContext().getResourcePaths("dialplan02.xml"));
-
-					String resp = null;
-					InputStream in = this.getServletContext().getResourceAsStream("dialplan02.xml");
-					Scanner scanner = new Scanner(in).useDelimiter("\\A");
-					if (scanner.hasNext())
-						resp = scanner.next();
-					System.out.println("get xml dialplan : " + resp);
-
-					PrintWriter out = response.getWriter();
-					out.println(resp);
-					return;
-				}
-				else if (true && ("7501".equals(dst_number) || "7502".equals(dst_number))) {
-					System.out.println("get xml file, conference01.xml, resources : "
-							+ this.getServletContext().getResourcePaths("conference01.xml"));
-
-					String resp = null;
-					InputStream in = this.getServletContext().getResourceAsStream("conference01.xml");
-					Scanner scanner = new Scanner(in).useDelimiter("\\A");
-					if (scanner.hasNext())
-						resp = scanner.next();
-					System.out.println("get xml dialplan : " + resp);
-
-					PrintWriter out = response.getWriter();
-					out.println(resp);
-					return;
-				}
-
-				if (true)
-					break; // nothing in dialplan, should put menu at configuration section
+Listen to the voice sample below:
 
 
-				String dialplan = null;
-				try (Connection connection = Config.createDB2Connection()) {
-					String sql = "select a.diaplan " + " from ng.call_ivrs a, ng.companies b "
-							+ " where a.company_id = b.company_id and b.company_subdomain = ? "
-							+ "   and a.extension = ? ";
-					PreparedStatement statement = connection.prepareStatement(sql);
-					statement.setString(1, subdomain);
-					statement.setString(2, dst_number);
-					System.out.println("sql to get dialplan : " + sql);
 
-					ResultSet result = statement.executeQuery();
-					if (result.next())
-						dialplan = result.getString(1);
+This module supports many languages and sounds very natural.
 
-					if (Config.isDebug())
-						System.out.println("dialplan : " + dialplan);
-					if (dialplan == null)
-						break;
-				} catch (SQLException e) {
-					System.out.println("can't get dialplan");
-					System.out.println(e.toString());
-					break;
-				} catch (NamingException e) {
-					System.out.println("can't load DB2 jdbc driver");
-					System.out.println(e.toString());
-					break;
-				}
+Install
+Install with the python package tool (pip):
 
-				PrintWriter out = response.getWriter();
-				out.println(dialplan);
-				return;
-			} while (false);
-		System.out.println("send 404 NOT FOUND");
-		response.sendError(HttpServletResponse.SC_NOT_FOUND);
-	}
+sudo pip install gTTS
+Example
 
-}
+
+
+from gtts import gTTS
+import os
+tts = gTTS(text='Good morning', lang='en')
+tts.save("good.mp3")
+os.system("mpg321 good.mp3")
+
+0
+1
+2
+3
+4
+5
+6
+ 
+from gtts import gTTS
+import os
+tts = gTTS(text='Good morning', lang='en')
+tts.save("good.mp3")
+os.system("mpg321 good.mp3")
+ 
+If you want to test it on the command line use:
+
+gtts-cli.py “Hello” -l ‘en’ -o hello.mp3
