@@ -1,5 +1,7 @@
 ps.setTimestamp(2, java.sql.Timestamp.from(java.time.Instant.now()));
 
+https://freeswitch.org/confluence/display/FREESWITCH/TTS
+
 https://pythonprogramminglanguage.com/text-to-speech/
 
 gTTS text to speech
