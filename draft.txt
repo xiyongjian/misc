@@ -1,5 +1,7 @@
 https://stackoverflow.com/questions/9733638/post-json-using-python-requests
 
+       10.0.1.250  255.255.255.255     192.168.30.1    192.168.30.10      2
+       
 ps.setTimestamp(2, java.sql.Timestamp.from(java.time.Instant.now()));
 
 ffmpeg -i song.mp3 -acodec pcm_u8 -ar 22050 song.wav
