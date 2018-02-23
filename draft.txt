@@ -2,6 +2,7 @@ ps.setTimestamp(2, java.sql.Timestamp.from(java.time.Instant.now()));
 
 ffmpeg -i song.mp3 -acodec pcm_u8 -ar 22050 song.wav
 
+exc_type, value, exc_traceback = sys.exc_info()
 
 import tempfile
 
