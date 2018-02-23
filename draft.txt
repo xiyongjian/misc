@@ -3,6 +3,12 @@ ps.setTimestamp(2, java.sql.Timestamp.from(java.time.Instant.now()));
 ffmpeg -i song.mp3 -acodec pcm_u8 -ar 22050 song.wav
 
 
+import tempfile
+
+temp_name = next(tempfile._get_candidate_names())
+% e.g. px9cp65s
+
+
 https://medium.com/@julsimon/amazon-polly-hello-world-literally-812de2c620f4
 
 https://freeswitch.org/confluence/display/FREESWITCH/TTS
