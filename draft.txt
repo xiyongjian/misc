@@ -1,5 +1,8 @@
 ps.setTimestamp(2, java.sql.Timestamp.from(java.time.Instant.now()));
 
+
+https://medium.com/@julsimon/amazon-polly-hello-world-literally-812de2c620f4
+
 https://freeswitch.org/confluence/display/FREESWITCH/TTS
 
 https://pythonprogramminglanguage.com/text-to-speech/
