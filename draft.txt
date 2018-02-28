@@ -1,3 +1,5 @@
+https://medium.com/ibm-watson/watson-tutorial-1-speech-to-text-alchemylanguage-sentiment-analysis-in-python-23e1a76965c5
+
 https://social.technet.microsoft.com/Forums/ie/en-US/8e37a5d3-cb82-4c5e-919f-e5a4ad8b56a3/how-to-measure-the-network-speed-between-two-windows-2008-r2-servers?forum=winserverPN
 
 https://iperf.fr/iperf-download.php#windows
