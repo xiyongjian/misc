@@ -11,6 +11,8 @@ target
 start :
 C:\Users\xyj
 
+%windir%\System32\cmd.exe "/K" c:\Users\jxi\AppData\Local\Continuum\miniconda3\Scripts\activate.bat c:\Users\jxi\AppData\Local\Continuum\miniconda3
+
 -----------------------------------------------------------------------------------
 tk jupyter notebook server setup
 miniconda, conda setup env 'notebook', inside, install jupyter & notebook
