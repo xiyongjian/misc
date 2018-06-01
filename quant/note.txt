@@ -1,2 +1,7 @@
 origin  https://github.com/dudulangaaa/GatewayCN.git (fetch)
 origin  https://github.com/dudulangaaa/GatewayCN.git (push)
+
+anydesk
+
+server
+703115374
